@@ -15,7 +15,7 @@ class Server {
 	}
 
 	routes() {
-		this.app.use(this.usersPath, require('../routes/user.routes'))
+		this.app.use(this.usersPath, require('../routes/users.routes'))
 	}
 
 	middlewares() {
