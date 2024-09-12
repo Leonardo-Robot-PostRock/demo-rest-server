@@ -1,20 +1,32 @@
-const { response } = require('express');
+const { response, request } = require('express');
 
-const usersGet = (req, res = response) => {
+const usersGet = (req = request, res = response) => {
+    const { q, name = 'No name', apikey, page = 1, limit } = req.query;
+
     res.json({
         msg: 'get API - controller',
+        q,
+        name,
+        apikey
     });
 };
 
 const usersPost = (req, res = response) => {
+    const { name, age } = req.body;
+
     res.json({
-        msg: 'post API - controller'
+        msg: 'post API - controller',
+        name,
+        age
     })
 }
 
 const usersPut = (req, res = response) => {
+    const { id } = req.params;
+
     res.json({
-        msg: 'put API - controller'
+        msg: 'put API - controller',
+        id
     })
 }
 
