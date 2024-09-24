@@ -1,5 +1,6 @@
 const { response, request } = require('express');
 const User = require('../models/user');
+const bcrypt = require('bcryptjs');
 
 const usersGet = (req = request, res = response) => {
     const { q, name = 'No name', apikey, page = 1, limit } = req.query;
@@ -13,9 +14,9 @@ const usersGet = (req = request, res = response) => {
 };
 
 const usersPost = async (req, res = response) => {
-    const body = req.body;
+    const { name, email, password, role } = req.body;
 
-    const user = new User(body);
+    const user = new User({ name, email, password, role });
 
     await user.save();
 
