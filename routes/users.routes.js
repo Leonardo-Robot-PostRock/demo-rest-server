@@ -14,7 +14,10 @@ const router = Router();
 router.get('/', usersGet);
 
 router.post('/', [
-    check('email', 'Correo no válido').isEmail()
+    check('name', 'El nombre es obligatorio').not().isEmpty(),
+    check('password', 'El password debe ser más de 6 letras').isLength({ min: 6 }),
+    check('email', 'Correo no válido').not().isEmpty().isEmail(),
+    check('role', 'No es un rol válido').isIn(['USER_ROLE', 'ADMIN_ROLE']).
 ],
     usersPost
 );
