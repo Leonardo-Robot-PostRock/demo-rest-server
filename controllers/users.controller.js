@@ -14,7 +14,7 @@ const usersGet = (req = request, res = response) => {
 };
 
 const usersPost = async (req, res = response) => {
-   
+
     const { name, email, password, role } = req.body;
 
     const user = new User({ name, email, password, role });
@@ -30,12 +30,21 @@ const usersPost = async (req, res = response) => {
     })
 }
 
-const usersPut = (req, res = response) => {
+const usersPut = async (req, res = response) => {
     const { id } = req.params;
 
+    const { password, google, email, ...rest } = req.body;
+
+    if (password) {
+        const salt = bcrypt.genSaltSync();
+
+        rest.password = bcrypt.hashSync(password, salt);
+    }
+
+    const user = await User.findByIdAndUpdate(id, rest);
+
     res.json({
-        msg: 'put API - controller',
-        id
+        user
     })
 }
 
@@ -47,7 +56,8 @@ const usersPatch = (req, res = response) => {
 
 const usersDelete = (req, res = response) => {
     res.json({
-        msg: 'delete API - controller'
+        msg: 'delete API - ',
+        user
     })
 }
 
