@@ -61,9 +61,15 @@ const usersPatch = (req, res = response) => {
     })
 }
 
-const usersDelete = (req, res = response) => {
+const usersDelete = async (req, res = response) => {
+
+    const { id } = req.params;
+
+    // const user = await User.findByIdAndDelete(id);
+
+    const user = await User.findByIdAndUpdate(id, { state: false })
+
     res.json({
-        msg: 'delete API - ',
         user
     })
 }
